@@ -1,8 +1,10 @@
 import { operate } from "./math.js"
 
-let operator = undefined
-let operand1 = undefined
-let operand2 = undefined
+let expression = {
+    operator: "",
+    operand1: "",
+    operand2: "",
+}
 
 const input = document.querySelector('#input')
 const digitButtons = document.querySelectorAll('.digit')
@@ -10,51 +12,53 @@ const operatorButtons = document.querySelectorAll('.operator')
 const equalsButton = document.querySelector('#EQ')
 const clearButton = document.querySelector('#C')
 
-digitButtons.forEach(btn => btn.addEventListener("click", e => appendDisplay(e.target.textContent)))
+digitButtons.forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
 operatorButtons.forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
 equalsButton.addEventListener("click", solve)
 clearButton.addEventListener("click", clear)
 
+function appendOperand(symbol) {
+    expression[getCurrentOperator()] += symbol
+    updateDisplay()
+}
+
 function handleOperator(symbol) {
-    if (typeof operator === "undefined") {
-        setOperand1()
+    if (symbol === "-" && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))) {
+        appendOperand(symbol)
     } else {
-        solve()
+        if (isSet("operator")) { solve() }
+        expression.operator = symbol
     }
 
-    operator = symbol
-    appendDisplay(` ${symbol} `)
+    updateDisplay()
 }
 
 function solve() {
-    setOperand2()
-    const result = operate(operator, operand1, operand2)
-    operator = undefined
-    operand2 = undefined
-    resetDisplay(`${result}`)
-    setOperand1()
+    expression.operand1 = operate(expression.operator, +expression.operand1, +expression.operand2)
+    expression.operand2 = ""
+    expression.operator = ""
+    updateDisplay()
 }
 
 function clear() {
-    operator = undefined
-    operand1 = undefined
-    operand2 = undefined
-    resetDisplay("")
+    expression.operator = ""
+    expression.operand1 = ""
+    expression.operand2 = ""
+    updateDisplay()
 }
 
-function setOperand1() {
-    operand1 = parseInt(input.value)
+function updateDisplay() {
+    input.value = expression.operand1
+
+    if (isSet("operator")) {
+        input.value += ` ${expression.operator} ${expression.operand2}`
+    }
 }
 
-function setOperand2() {
-    operand2 = parseInt(input.value.split(operator)[1])
+function isSet(property) {
+    return expression[property].length > 0
 }
 
-function appendDisplay(symbol) {
-    input.value += symbol
-    input.selectionStart = input.value.length
-}
-
-function resetDisplay(string) {
-    input.value = string
+function getCurrentOperator() {
+    return isSet("operator") ? "operand2" : "operand1"
 }
