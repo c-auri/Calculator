@@ -31,9 +31,8 @@ function handleOperator(symbol) {
     } else {
         if (isSet("operator")) { solve() }
         expression.operator = symbol
+        updateDisplay()
     }
-
-    updateDisplay()
 }
 
 function solve() {
@@ -41,7 +40,7 @@ function solve() {
         return
     }
 
-    expression.operand1 = operate(expression.operator, +expression.operand1, +expression.operand2)
+    expression.operand1 = String(operate(expression.operator, +expression.operand1, +expression.operand2))
     expression.operand2 = ""
     expression.operator = ""
     updateDisplay()
@@ -76,6 +75,8 @@ function updateDisplay() {
     if (isSet("operator")) {
         input.value += ` ${expression.operator} ${expression.operand2}`
     }
+
+    console.log(expression)
 }
 
 function isSet(property) {
