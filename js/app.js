@@ -11,11 +11,14 @@ const digitButtons = document.querySelectorAll('.digit')
 const operatorButtons = document.querySelectorAll('.operator')
 const equalsButton = document.querySelector('#EQ')
 const clearButton = document.querySelector('#C')
+const clearEntryButton = document.querySelector('#CE')
 
 digitButtons.forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
 operatorButtons.forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
 equalsButton.addEventListener("click", solve)
 clearButton.addEventListener("click", clear)
+clearEntryButton.addEventListener("click", clearEntry)
+
 
 function appendOperand(symbol) {
     expression[getCurrentOperator()] += symbol
@@ -45,6 +48,22 @@ function clear() {
     expression.operand1 = ""
     expression.operand2 = ""
     updateDisplay()
+}
+
+function clearEntry() {
+    if (isSet("operand2")) {
+        clearLast("operand2")
+    } else if (isSet("operator")) {
+        clearLast("operator")
+    } else if (isSet("operand1")) {
+        clearLast("operand1")
+    }
+
+    updateDisplay()
+}
+
+function clearLast(property) {
+    expression[property] = expression[property].slice(0, -1)
 }
 
 function updateDisplay() {
