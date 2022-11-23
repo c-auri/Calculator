@@ -37,6 +37,10 @@ function handleOperator(symbol) {
 }
 
 function solve() {
+    if (!isSet("operand2")) {
+        return
+    }
+
     expression.operand1 = operate(expression.operator, +expression.operand1, +expression.operand2)
     expression.operand2 = ""
     expression.operator = ""
