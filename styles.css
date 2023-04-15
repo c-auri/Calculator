@@ -6,6 +6,8 @@ body {
     margin: 0;
     min-height: 100vh;
     background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
 }
 
 body,
@@ -13,6 +15,10 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+main {
+    flex: 1;
 }
 
 .calculator {
@@ -114,4 +120,32 @@ button#CLEAR {
 button#DEL {
     grid-row: 1;
     grid-column: span 2;
+}
+
+footer {
+    padding: .5rem 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    color: silver;
+    font-family: sans-serif;
+}
+
+.links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.icon {
+    height: 1.25rem;
+}
+
+footer a {
+    text-decoration: none;
+    color: inherit;
+}
+
+footer a:hover {
+    color: gray;
 }
