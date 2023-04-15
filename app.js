@@ -126,7 +126,7 @@ function clearLast(property) {
 function updateDisplay() {
     input.value = expression.operand1
     
-    if (isNaN(+input.value) || !isFinite(+input.value)) {
+    if (input.value !== '-' && (isNaN(+input.value) || !isFinite(+input.value))) {
         showError()
         clearExpression()
     }
