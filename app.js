@@ -1,5 +1,3 @@
-import { operate } from "./math.js"
-
 let expression = {
     operator: "",
     operand1: "",
@@ -18,7 +16,6 @@ operatorButtons.forEach(btn => btn.addEventListener("click", e => handleOperator
 equalsButton.addEventListener("click", solve)
 clearButton.addEventListener("click", clear)
 clearEntryButton.addEventListener("click", clearEntry)
-
 
 function appendOperand(symbol) {
     expression[getCurrentOperator()] += symbol
@@ -44,6 +41,15 @@ function solve() {
     expression.operand2 = ""
     expression.operator = ""
     updateDisplay()
+}
+
+function operate(operator, a, b) {
+    switch (operator) {
+        case "+": return a + b
+        case "-": return a - b
+        case "×": return a * b
+        case "÷": return a / b
+    }
 }
 
 function clear() {
