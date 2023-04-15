@@ -2,8 +2,8 @@ document.querySelectorAll('.digit').forEach(btn => btn.addEventListener("click",
 document.querySelectorAll('.operator').forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
 
 document.querySelector('#EQ').addEventListener("click", solve)
-document.querySelector('#C').addEventListener("click", clear)
-document.querySelector('#CE').addEventListener("click", clearEntry)
+document.querySelector('#CLEAR').addEventListener("click", clear)
+document.querySelector('#DEL').addEventListener("click", clearEntry)
 
 const input = document.querySelector('#input')
 

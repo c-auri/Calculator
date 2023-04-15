@@ -82,8 +82,8 @@ button#EQ {
     grid-row: 5;
 }
 
-button#CE,
-button#C {
+button#DEL,
+button#CLEAR {
     aspect-ratio: unset;
 }
 
@@ -91,12 +91,12 @@ button#EQ {
     grid-area: 1 1 EQ;
 }
 
-button#C {
+button#CLEAR {
     grid-row: 1;
     grid-column: span 2;
 }
 
-button#CE {
+button#DEL {
     grid-row: 1;
     grid-column: span 2;
 }
