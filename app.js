@@ -6,6 +6,7 @@ document.querySelector('#CLEAR').addEventListener("click", clear)
 document.querySelector('#DEL').addEventListener("click", clearEntry)
 
 const input = document.querySelector('#input')
+const error = document.querySelector('#error')
 
 const precisionFactor = 100
 
@@ -16,12 +17,14 @@ const expression = {
 }
 
 function appendOperand(symbol) {
+    removeError()
     expression[getCurrentOperand()] += symbol
     updateDisplay()
 }
 
 function handleOperator(symbol) {
     if (symbol === "-" && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))) {
+        removeError()
         appendOperand(symbol)
     } else {
         if (isSet("operator")) { solve() }
@@ -54,10 +57,16 @@ function operate(operator, a, b) {
 }
 
 function clear() {
+    removeError()
+    clearExpression()
+    updateDisplay()
+}
+
+function clearExpression() {
     expression.operator = ""
     expression.operand1 = ""
     expression.operand2 = ""
-    updateDisplay()
+    input.value = ''
 }
 
 function clearEntry() {
@@ -78,10 +87,23 @@ function clearLast(property) {
 
 function updateDisplay() {
     input.value = expression.operand1
+    
+    if (isNaN(+input.value) || !isFinite(+input.value)) {
+        showError()
+        clearExpression()
+    }
 
     if (isSet("operator")) {
         input.value += ` ${expression.operator} ${expression.operand2}`
     }
+}
+
+function showError() {
+    error.classList.remove('hidden')
+}
+
+function removeError() {
+    error.classList.add('hidden')
 }
 
 function isSet(property) {
