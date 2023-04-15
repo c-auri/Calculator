@@ -97,13 +97,13 @@ button#EQ {
     grid-row: 5;
 }
 
+button.zero {
+    grid-column: 2;
+}
+
 button#DEL,
 button#CLEAR {
     aspect-ratio: unset;
-}
-
-button#EQ {
-    grid-area: 1 1 EQ;
 }
 
 button#CLEAR {
