@@ -1,5 +1,6 @@
 document.querySelectorAll('.digit').forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
 document.querySelectorAll('.operator').forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
+document.querySelector('#point').addEventListener("click", handleDecimalPoint)
 
 document.querySelector('#EQ').addEventListener("click", solve)
 document.querySelector('#CLEAR').addEventListener("click", clear)
@@ -30,6 +31,15 @@ function handleOperator(symbol) {
         if (isSet("operator")) { solve() }
         expression.operator = symbol
         updateDisplay()
+    }
+}
+
+function handleDecimalPoint() {
+    if (!expression[getCurrentOperand()]) {
+        appendOperand('0')
+    }
+    if (!expression[getCurrentOperand()].includes('.')) {
+        appendOperand('.')
     }
 }
 

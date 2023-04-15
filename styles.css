@@ -86,7 +86,7 @@ button.bot {
 }
 
 button.zero,
-button#dot,
+button#point,
 button#EQ {
     grid-row: 5;
 }
