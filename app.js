@@ -19,7 +19,7 @@ const expression = {
 
 function appendOperand(symbol) {
     removeError()
-    expression[getCurrentOperand()] += symbol
+    expression[getCurrentOperandName()] += symbol
     updateDisplay()
 }
 
@@ -35,10 +35,10 @@ function handleOperator(symbol) {
 }
 
 function handleDecimalPoint() {
-    if (!expression[getCurrentOperand()]) {
+    if (!getCurrentOperand()) {
         appendOperand('0')
     }
-    if (!expression[getCurrentOperand()].includes('.')) {
+    if (!getCurrentOperand().includes('.')) {
         appendOperand('.')
     }
 }
@@ -120,6 +120,10 @@ function isSet(property) {
     return expression[property].length > 0
 }
 
-function getCurrentOperand() {
+function getCurrentOperandName() {
     return isSet("operator") ? "operand2" : "operand1"
+}
+
+function getCurrentOperand() {
+    return expression[getCurrentOperandName()]
 }
