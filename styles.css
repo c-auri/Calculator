@@ -46,7 +46,7 @@ main {
     height: 7rem;
     text-align: right;
     font-size: 2rem;
-    border: 1px solid lightgray;
+    border: 3px solid lightgray;
 }
 
 #input:focus {
