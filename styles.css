@@ -73,6 +73,11 @@ button.digit {
     background-color: gainsboro;
 }
 
+button:hover {
+    color: whitesmoke;
+    background-color: gray;
+}
+
 button.top {
     grid-row: 2;
 }
