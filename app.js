@@ -6,8 +6,9 @@ document.querySelector('#EQ').addEventListener("click", solve)
 document.querySelector('#CLEAR').addEventListener("click", clear)
 document.querySelector('#DEL').addEventListener("click", clearEntry)
 
-const input = document.querySelector('#input')
 const error = document.querySelector('#error')
+const input = document.querySelector('#input')
+input.value = ''
 
 const precisionFactor = 100
 
