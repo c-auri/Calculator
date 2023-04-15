@@ -48,7 +48,6 @@ function appendOperand(symbol) {
 
 function handleOperator(symbol) {
     if (symbol === "-" && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))) {
-        removeError()
         appendOperand(symbol)
     } else {
         if (isSet("operator")) { solve() }
