@@ -47,12 +47,24 @@ function appendOperand(symbol) {
 }
 
 function handleOperator(symbol) {
-    if (symbol === "-" && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))) {
-        appendOperand(symbol)
-    } else {
-        if (isSet("operator")) { solve() }
-        expression.operator = symbol
-        updateDisplay()
+    switch (symbol) {
+        case '*':
+            handleOperator("×")
+            break;
+        case '/':
+            handleOperator("÷")
+            break;
+        case '-':
+            if (!isSet("operand1") || isSet("operator") && !isSet("operand2")) {
+                appendOperand(symbol)
+                break;
+            }
+            // intentional fallthrough
+        default:
+            if (isSet("operator")) { solve() }
+            expression.operator = symbol
+            updateDisplay()
+            break;
     }
 }
 
@@ -85,10 +97,8 @@ function operate(operator, a, b) {
             return a + b
         case "-": 
             return a - b
-        case "*": 
         case "×":
             return a * b
-        case "/": 
         case "÷": 
             return a / b
     }
