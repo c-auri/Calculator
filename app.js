@@ -1,21 +1,19 @@
-let expression = {
+document.querySelectorAll('.digit').forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
+document.querySelectorAll('.operator').forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
+
+document.querySelector('#EQ').addEventListener("click", solve)
+document.querySelector('#C').addEventListener("click", clear)
+document.querySelector('#CE').addEventListener("click", clearEntry)
+
+const input = document.querySelector('#input')
+
+const precisionFactor = 100
+
+const expression = {
     operator: "",
     operand1: "",
     operand2: "",
 }
-
-const input = document.querySelector('#input')
-const digitButtons = document.querySelectorAll('.digit')
-const operatorButtons = document.querySelectorAll('.operator')
-const equalsButton = document.querySelector('#EQ')
-const clearButton = document.querySelector('#C')
-const clearEntryButton = document.querySelector('#CE')
-
-digitButtons.forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
-operatorButtons.forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
-equalsButton.addEventListener("click", solve)
-clearButton.addEventListener("click", clear)
-clearEntryButton.addEventListener("click", clearEntry)
 
 function appendOperand(symbol) {
     expression[getCurrentOperator()] += symbol
