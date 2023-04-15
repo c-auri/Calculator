@@ -82,8 +82,6 @@ function updateDisplay() {
     if (isSet("operator")) {
         input.value += ` ${expression.operator} ${expression.operand2}`
     }
-
-    console.log(expression)
 }
 
 function isSet(property) {
