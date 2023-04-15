@@ -35,7 +35,10 @@ function solve() {
         return
     }
 
-    expression.operand1 = String(operate(expression.operator, +expression.operand1, +expression.operand2))
+    let result = operate(expression.operator, +expression.operand1, +expression.operand2)
+    result = Math.round(result * precisionFactor) / precisionFactor
+
+    expression.operand1 = String(result)
     expression.operand2 = ""
     expression.operator = ""
     updateDisplay()

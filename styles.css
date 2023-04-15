@@ -65,6 +65,10 @@ button {
     background-color: lightgray;
 }
 
+button.digit {
+    background-color: gainsboro;
+}
+
 button.top {
     grid-row: 2;
 }
