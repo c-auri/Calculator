@@ -16,7 +16,7 @@ const expression = {
 }
 
 function appendOperand(symbol) {
-    expression[getCurrentOperator()] += symbol
+    expression[getCurrentOperand()] += symbol
     updateDisplay()
 }
 
@@ -88,6 +88,6 @@ function isSet(property) {
     return expression[property].length > 0
 }
 
-function getCurrentOperator() {
+function getCurrentOperand() {
     return isSet("operator") ? "operand2" : "operand1"
 }
