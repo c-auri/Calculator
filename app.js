@@ -1,3 +1,5 @@
+window.addEventListener("keydown", handleKeypress)
+
 document.querySelectorAll('.digit').forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
 document.querySelectorAll('.operator').forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
 document.querySelector('#point').addEventListener("click", handleDecimalPoint)
@@ -16,6 +18,26 @@ const expression = {
     operator: "",
     operand1: "",
     operand2: "",
+}
+
+const numberKeys = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ]
+const operatorKeys = [ '+', '-', '*', '×', '/', '÷', ]
+
+function handleKeypress(e) {
+    if (numberKeys.includes(e.key)) {
+        appendOperand(e.key)
+    } else if (operatorKeys.includes(e.key)) {
+        e.preventDefault()
+        handleOperator(e.key)
+    } else if (e.key === '.') {
+        handleDecimalPoint()
+    } else if (e.key === 'Enter') {
+        solve()
+    } else if (e.key === 'Backspace') {
+        clearEntry()
+    } else if (e.key === 'Escape') {
+        clear()
+    }
 }
 
 function appendOperand(symbol) {
@@ -60,10 +82,16 @@ function solve() {
 
 function operate(operator, a, b) {
     switch (operator) {
-        case "+": return a + b
-        case "-": return a - b
-        case "×": return a * b
-        case "÷": return a / b
+        case "+": 
+            return a + b
+        case "-": 
+            return a - b
+        case "*": 
+        case "×":
+            return a * b
+        case "/": 
+        case "÷": 
+            return a / b
     }
 }
 

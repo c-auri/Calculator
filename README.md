@@ -12,4 +12,4 @@ A simple calculator app for [The Odin Project](https://www.theodinproject.com/le
 - [x] Users can input floating point numbers
 - [x] Looks pretty (at least I think so)
 - [x] Has a "backspace" button
-- [ ] Keyboard support
+- [x] Keyboard support
