@@ -12,7 +12,7 @@ const error = document.querySelector('#error')
 const input = document.querySelector('#input')
 input.textContent = ''
 
-const precisionFactor = 100
+const precisionFactor = 1000
 
 const expression = {
     operator: "",
