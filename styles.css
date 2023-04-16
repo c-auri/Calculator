@@ -31,6 +31,7 @@ main {
     flex-direction: column;
     position: relative;
     font-family: monospace;
+    background-color: white;
 }
 
 #panel {
