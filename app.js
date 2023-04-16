@@ -24,24 +24,29 @@ const numberKeys = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ]
 const operatorKeys = [ '+', '-', '*', '×', '/', '÷', ]
 
 function handleKeypress(e) {
-    if (numberKeys.includes(e.key)) {
-        appendOperand(e.key)
-    } else if (operatorKeys.includes(e.key)) {
+    let key = e.key
+
+    if (key === '*') key = '×'
+    if (key === '/') key = '÷'
+
+    if (numberKeys.includes(key)) {
+        appendOperand(key)
+    } else if (operatorKeys.includes(key)) {
         e.preventDefault()
-        handleOperator(e.key)
-    } else if (e.key === '.') {
+        handleOperator(key)
+    } else if (key === '.') {
         handleDecimalPoint()
-    } else if (e.key === 'Enter') {
+    } else if (key === 'Enter') {
         solve()
-    } else if (e.key === 'Backspace') {
+    } else if (key === 'Backspace') {
         clearEntry()
-    } else if (e.key === 'Escape') {
+    } else if (key === 'Escape') {
         clear()
     } else {
         return
     }
 
-    animateKeyPress(e.key)
+    animateKeyPress(key)
 }
 
 function appendOperand(symbol) {
@@ -51,32 +56,21 @@ function appendOperand(symbol) {
 }
 
 function handleOperator(symbol) {
-    switch (symbol) {
-        case '*':
-            handleOperator("×")
-            break;
-        case '/':
-            handleOperator("÷")
-            break;
-        case '-':
-            if (!isSet("operand1") || isSet("operator") && !isSet("operand2")) {
-                appendOperand(symbol)
-                break;
-            }
-            // intentional fallthrough
-        default:
-            if (isSet("operator")) {
-                solve()
-            }
-
-            if (!isSet("operand1") && !['+', '-'].includes(symbol)) {
-                appendCurrentOperand('1')
-            }
-
-            expression.operator = symbol
-            updateDisplay()
-            break;
+    if (symbol === '-' && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))) {
+        appendOperand(symbol)
+        return
     }
+
+    if (isSet("operator")) {
+        solve()
+    }
+
+    if (!isSet("operand1") && !['+', '-'].includes(symbol)) {
+        appendCurrentOperand('1')
+    }
+
+    expression.operator = symbol
+    updateDisplay()
 }
 
 function handleDecimalPoint() {
