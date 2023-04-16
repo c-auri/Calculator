@@ -10,7 +10,7 @@ document.querySelector('#DEL').addEventListener("click", clearLastEntry)
 
 const error = document.querySelector('#error')
 const input = document.querySelector('#input')
-input.value = ''
+input.textContent = ''
 
 const precisionFactor = 100
 
@@ -125,7 +125,7 @@ function clearExpression() {
     expression.operator = ""
     expression.operand1 = ""
     expression.operand2 = ""
-    input.value = ''
+    input.textContent = ''
 }
 
 function clearLastEntry() {
@@ -145,15 +145,15 @@ function sliceProperty(property) {
 }
 
 function updateDisplay() {
-    input.value = expression.operand1
+    input.textContent = expression.operand1
 
-    if (!isValid(input.value)) {
+    if (!isValid(input.textContent)) {
         showError()
         clearExpression()
     }
 
     if (isSet("operator")) {
-        input.value += ` ${expression.operator} ${expression.operand2}`
+        input.textContent += ` ${expression.operator} ${expression.operand2}`
     }
 }
 
@@ -162,7 +162,7 @@ function isValid(number) {
 }
 
 function updateCursor(input) {
-    input.selectionStart = input.selectionEnd = input.value.length
+    input.selectionStart = input.selectionEnd = input.textContent.length
 }
 
 function showError() {

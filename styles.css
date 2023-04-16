@@ -26,11 +26,13 @@ main {
 }
 
 #display {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     position: relative;
     font-family: 'Courier New', Courier, monospace;
 }
 
-#input,
 #panel {
     width: 100%;
 }
@@ -51,6 +53,12 @@ main {
     padding-inline: 1rem;
     padding-top: 3.5rem;
     height: 7rem;
+    max-width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
     text-align: right;
     font-size: 2rem;
     border: 3px solid lightgray;
