@@ -42,7 +42,7 @@ function handleKeypress(e) {
 
 function appendOperand(symbol) {
     removeError()
-    expression[getCurrentOperandName()] += symbol
+    appendCurrentOperand(symbol)
     updateDisplay()
 }
 
@@ -61,7 +61,14 @@ function handleOperator(symbol) {
             }
             // intentional fallthrough
         default:
-            if (isSet("operator")) { solve() }
+            if (isSet("operator")) {
+                solve()
+            }
+
+            if (!isSet("operand1") && !['+', '-'].includes(symbol)) {
+                appendCurrentOperand('1')
+            }
+
             expression.operator = symbol
             updateDisplay()
             break;
@@ -93,13 +100,13 @@ function solve() {
 
 function operate(operator, a, b) {
     switch (operator) {
-        case "+": 
+        case "+":
             return a + b
-        case "-": 
+        case "-":
             return a - b
         case "×":
             return a * b
-        case "÷": 
+        case "÷":
             return a / b
     }
 }
@@ -135,7 +142,7 @@ function clearLast(property) {
 
 function updateDisplay() {
     input.value = expression.operand1
-    
+
     if (input.value !== '-' && (isNaN(+input.value) || !isFinite(+input.value))) {
         showError()
         clearExpression()
@@ -164,4 +171,8 @@ function getCurrentOperandName() {
 
 function getCurrentOperand() {
     return expression[getCurrentOperandName()]
+}
+
+function appendCurrentOperand(symbol) {
+    expression[getCurrentOperandName()] += symbol
 }
