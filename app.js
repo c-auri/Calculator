@@ -1,12 +1,12 @@
 window.addEventListener("keydown", handleKeypress)
 
-document.querySelectorAll('.digit').forEach(btn => btn.addEventListener("click", e => appendOperand(e.target.textContent)))
+document.querySelectorAll('.digit').forEach(btn => btn.addEventListener("click", e => handleOperand(e.target.textContent)))
 document.querySelectorAll('.operator').forEach(btn => btn.addEventListener("click", e => handleOperator(e.target.textContent)))
 document.querySelector('#point').addEventListener("click", handleDecimalPoint)
 
 document.querySelector('#EQ').addEventListener("click", solve)
-document.querySelector('#CLEAR').addEventListener("click", clear)
-document.querySelector('#DEL').addEventListener("click", clearEntry)
+document.querySelector('#CLEAR').addEventListener("click", clearAll)
+document.querySelector('#DEL').addEventListener("click", clearLastEntry)
 
 const error = document.querySelector('#error')
 const input = document.querySelector('#input')
@@ -30,7 +30,7 @@ function handleKeypress(e) {
     if (key === '/') key = '÷'
 
     if (numberKeys.includes(key)) {
-        appendOperand(key)
+        handleOperand(key)
     } else if (operatorKeys.includes(key)) {
         e.preventDefault()
         handleOperator(key)
@@ -39,9 +39,9 @@ function handleKeypress(e) {
     } else if (key === 'Enter') {
         solve()
     } else if (key === 'Backspace') {
-        clearEntry()
+        clearLastEntry()
     } else if (key === 'Escape') {
-        clear()
+        clearAll()
     } else {
         return
     }
@@ -49,15 +49,15 @@ function handleKeypress(e) {
     animateKeyPress(key)
 }
 
-function appendOperand(symbol) {
+function handleOperand(symbol) {
     removeError()
     appendCurrentOperand(symbol)
     updateDisplay()
 }
 
 function handleOperator(symbol) {
-    if (symbol === '-' && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))) {
-        appendOperand(symbol)
+    if (isMinusSign(symbol)) {
+        handleOperand(symbol)
         return
     }
 
@@ -75,10 +75,10 @@ function handleOperator(symbol) {
 
 function handleDecimalPoint() {
     if (!getCurrentOperand()) {
-        appendOperand('0')
+        handleOperand('0')
     }
     if (!getCurrentOperand().includes('.')) {
-        appendOperand('.')
+        handleOperand('.')
     }
 }
 
@@ -109,41 +109,47 @@ function operate({ operator, operand1, operand2 }) {
     }
 }
 
-function clear() {
-    removeError()
-    clearAll()
-    updateDisplay()
+function animateKeyPress(key) {
+    const button = document.querySelector(`[data-key="${key}"]`)
+    button.classList.add('pressed')
+    setTimeout(() => button.classList.remove('pressed'), 100)
 }
 
 function clearAll() {
+    removeError()
+    clearExpression()
+    updateDisplay()
+}
+
+function clearExpression() {
     expression.operator = ""
     expression.operand1 = ""
     expression.operand2 = ""
     input.value = ''
 }
 
-function clearEntry() {
+function clearLastEntry() {
     if (isSet("operand2")) {
-        clearLast("operand2")
+        sliceProperty("operand2")
     } else if (isSet("operator")) {
-        clearLast("operator")
+        sliceProperty("operator")
     } else if (isSet("operand1")) {
-        clearLast("operand1")
+        sliceProperty("operand1")
     }
 
     updateDisplay()
 }
 
-function clearLast(property) {
+function sliceProperty(property) {
     expression[property] = expression[property].slice(0, -1)
 }
 
 function updateDisplay() {
     input.value = expression.operand1
 
-    if (input.value !== '-' && (isNaN(+input.value) || !isFinite(+input.value))) {
+    if (!isValid(input.value)) {
         showError()
-        clearAll()
+        clearExpression()
     }
 
     if (isSet("operator")) {
@@ -151,10 +157,25 @@ function updateDisplay() {
     }
 }
 
-function animateKeyPress(key) {
-    const button = document.querySelector(`[data-key="${key}"]`)
-    button.classList.add('pressed')
-    setTimeout(() => button.classList.remove('pressed'), 100)
+function isValid(number) {
+    return number === '-' || (!isNaN(+number) && isFinite(+number))
+}
+
+function updateCursor(input) {
+    input.selectionStart = input.selectionEnd = input.value.length
+}
+
+function showError() {
+    error.classList.remove('hidden')
+}
+
+function removeError() {
+    error.classList.add('hidden')
+}
+
+function isMinusSign(symbol) {
+    return symbol === '-'
+        && (!isSet("operand1") || isSet("operator") && !isSet("operand2"))
 }
 
 function isSet(property) {
@@ -171,12 +192,4 @@ function appendCurrentOperand(symbol) {
 
 function getCurrentOperandName() {
     return isSet("operator") ? "operand2" : "operand1"
-}
-
-function showError() {
-    error.classList.remove('hidden')
-}
-
-function removeError() {
-    error.classList.add('hidden')
 }
