@@ -89,7 +89,7 @@ function solve() {
         return
     }
 
-    let result = operate(expression.operator, +expression.operand1, +expression.operand2)
+    let result = operate(expression)
     result = Math.round(result * precisionFactor) / precisionFactor
 
     expression.operand1 = String(result)
@@ -98,26 +98,26 @@ function solve() {
     updateDisplay()
 }
 
-function operate(operator, a, b) {
+function operate({ operator, operand1, operand2 }) {
     switch (operator) {
         case "+":
-            return a + b
+            return +operand1 + +operand2
         case "-":
-            return a - b
+            return +operand1 - +operand2
         case "×":
-            return a * b
+            return +operand1 * +operand2
         case "÷":
-            return a / b
+            return +operand1 / +operand2
     }
 }
 
 function clear() {
     removeError()
-    clearExpression()
+    clearAll()
     updateDisplay()
 }
 
-function clearExpression() {
+function clearAll() {
     expression.operator = ""
     expression.operand1 = ""
     expression.operand2 = ""
@@ -145,7 +145,7 @@ function updateDisplay() {
 
     if (input.value !== '-' && (isNaN(+input.value) || !isFinite(+input.value))) {
         showError()
-        clearExpression()
+        clearAll()
     }
 
     if (isSet("operator")) {
@@ -153,20 +153,8 @@ function updateDisplay() {
     }
 }
 
-function showError() {
-    error.classList.remove('hidden')
-}
-
-function removeError() {
-    error.classList.add('hidden')
-}
-
 function isSet(property) {
     return expression[property].length > 0
-}
-
-function getCurrentOperandName() {
-    return isSet("operator") ? "operand2" : "operand1"
 }
 
 function getCurrentOperand() {
@@ -175,4 +163,16 @@ function getCurrentOperand() {
 
 function appendCurrentOperand(symbol) {
     expression[getCurrentOperandName()] += symbol
+}
+
+function getCurrentOperandName() {
+    return isSet("operator") ? "operand2" : "operand1"
+}
+
+function showError() {
+    error.classList.remove('hidden')
+}
+
+function removeError() {
+    error.classList.add('hidden')
 }
