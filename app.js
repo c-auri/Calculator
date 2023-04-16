@@ -37,7 +37,11 @@ function handleKeypress(e) {
         clearEntry()
     } else if (e.key === 'Escape') {
         clear()
+    } else {
+        return
     }
+
+    animateKeyPress(e.key)
 }
 
 function appendOperand(symbol) {
@@ -151,6 +155,12 @@ function updateDisplay() {
     if (isSet("operator")) {
         input.value += ` ${expression.operator} ${expression.operand2}`
     }
+}
+
+function animateKeyPress(key) {
+    const button = document.querySelector(`[data-key="${key}"]`)
+    button.classList.add('pressed')
+    setTimeout(() => button.classList.remove('pressed'), 100)
 }
 
 function isSet(property) {

@@ -82,7 +82,8 @@ button.digit {
     background-color: gainsboro;
 }
 
-button:hover {
+button:hover,
+button.pressed {
     color: whitesmoke;
     background-color: gray;
 }
