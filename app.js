@@ -74,9 +74,12 @@ function handleOperator(symbol) {
 }
 
 function handleDecimalPoint() {
-    if (!getCurrentOperand()) {
+    const currentOperand = getCurrentOperand()
+
+    if (!currentOperand || currentOperand === '-') {
         handleOperand('0')
     }
+
     if (!getCurrentOperand().includes('.')) {
         handleOperand('.')
     }
