@@ -31,7 +31,6 @@ main {
     flex-direction: column;
     position: relative;
     font-family: monospace;
-    background-color: white;
 }
 
 #panel {
@@ -64,6 +63,7 @@ main {
     font-size: 2rem;
     border: 3px solid lightgray;
     color: #505050;
+    background-color: white;
 }
 
 #input:focus {
